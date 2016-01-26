@@ -2,6 +2,7 @@ package com.hiway.demo;
 
 import java.sql.Connection;
 
+import com.hiway.model._MappingKit;
 import com.jfinal.config.Constants;
 import com.jfinal.config.Handlers;
 import com.jfinal.config.Interceptors;
@@ -41,7 +42,7 @@ public class DemoConfig extends JFinalConfig {
 		arp.setDialect(new OracleDialect());
 		// 配置属性名(字段名)大小写不敏感容器工厂
 		arp.setContainerFactory(new CaseInsensitiveContainerFactory());
-		arp.addMapping("student", "id", Student.class);
+		_MappingKit.mapping(arp);
 	}
 
 	@Override
