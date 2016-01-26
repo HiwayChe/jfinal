@@ -26,7 +26,7 @@ public class Test {
 		String dir = "D:\\workspace\\jfinal\\src\\main\\java\\com\\hiway\\model";
 		Generator generator = new Generator(dataSource, "com.hiway.model", dir, "com.hiway.model", dir);
 		generator.setDialect(new OracleDialect());
-		generator.generate();
+		generator.generate(); 
 	}
 }
 
