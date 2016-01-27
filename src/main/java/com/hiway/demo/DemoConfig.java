@@ -19,6 +19,7 @@ import com.jfinal.render.ViewType;
 public class DemoConfig extends JFinalConfig {
 
 	public void configConstant(Constants me) {
+		this.loadPropertyFile("jdbc.properties");
 		me.setDevMode(true);
 		me.setViewType(ViewType.FREE_MARKER);
 	}
@@ -30,7 +31,6 @@ public class DemoConfig extends JFinalConfig {
 
 	@Override
 	public void configPlugin(Plugins me) {
-		this.loadPropertyFile("jdbc.properties");
 		C3p0Plugin cp = new C3p0Plugin(this.getProperty("jdbc.url"), this.getProperty("jdbc.username"), this.getProperty("jdbc.password"));
 		// 配置Oracle驱动
 		cp.setDriverClass(this.getProperty("jdbc.driverClass"));
@@ -40,6 +40,7 @@ public class DemoConfig extends JFinalConfig {
 		me.add(arp);
 		// 配置Oracle方言
 		arp.setDialect(new OracleDialect());
+		arp.setShowSql(true);
 		// 配置属性名(字段名)大小写不敏感容器工厂
 		arp.setContainerFactory(new CaseInsensitiveContainerFactory());
 		_MappingKit.mapping(arp);
