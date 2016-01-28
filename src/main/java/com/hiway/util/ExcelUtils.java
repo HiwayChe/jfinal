@@ -38,8 +38,8 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 
 /**
- * ¶ÁĞ´ExcelµÄ¹¤¾ßÀà£¬°üÀ¨csvºÍtxt¡£¿ÉÖ±½ÓÏÂÔØExcel
- * Excelµ¥Ôª¸ñÖ»Ö§³Ö×Ö·û´®ºÍÊı×ÖÀàĞÍ¡£
+ * è¯»å†™Excelçš„å·¥å…·ç±»ï¼ŒåŒ…æ‹¬csvå’Œtxtã€‚å¯ç›´æ¥ä¸‹è½½Excel
+ * Excelå•å…ƒæ ¼åªæ”¯æŒå­—ç¬¦ä¸²å’Œæ•°å­—ç±»å‹ã€‚
  * @author guangai.che
  * @date Aug 14, 2014
  * 
@@ -83,9 +83,9 @@ public class ExcelUtils {
 	}
 	
 	/**
-	 * Êä³öexcelµ½¿Í»§¶ËÏÂÔØ
-	 * @param response  ½áÊøºóÁ÷×Ô¶¯ ¹Ø±Õ
-	 * @param fileName¿ÉÒÔÎª¿Õ
+	 * è¾“å‡ºexcelåˆ°å®¢æˆ·ç«¯ä¸‹è½½
+	 * @param response  ç»“æŸåæµè‡ªåŠ¨ å…³é—­
+	 * @param fileNameå¯ä»¥ä¸ºç©º
 	 * @param dataList
 	 * @param columnList
 	 */
@@ -107,9 +107,9 @@ public class ExcelUtils {
 	}
 	
 	/**
-	 * Êä³öexcel
-	 * @param response ×Ô¶¯¹Ø±Õ
-	 * @param fileName ¿ÉÒÔÎª¿Õ
+	 * è¾“å‡ºexcel
+	 * @param response è‡ªåŠ¨å…³é—­
+	 * @param fileName å¯ä»¥ä¸ºç©º
 	 * @param dataList
 	 * @param columnList
 	 * @param isCsv
@@ -138,7 +138,7 @@ public class ExcelUtils {
 	}
 	
 	/**
-	 * Ğ´³öÊı¾İµ½Á÷£¬ÓÃPOIÊµÏÖ£¬Êı¾İÁ¿´óµÄÊ±ºò²»ÒªÓÃÕâ¸ö·½·¨
+	 * å†™å‡ºæ•°æ®åˆ°æµï¼Œç”¨POIå®ç°ï¼Œæ•°æ®é‡å¤§çš„æ—¶å€™ä¸è¦ç”¨è¿™ä¸ªæ–¹æ³•
 	 * @param stream
 	 * @param dataList
 	 * @param columnList
@@ -170,11 +170,12 @@ public class ExcelUtils {
 		}
 
 		workbook.write(stream);
+		workbook.close();
 		stream.flush();
 	}
 	
 	/**
-	 * Êä³ö´óÁ¿µÄÊı¾İ£¬Êä³ö¸ñÊ½ÊÇcsv,´¿ÎÄ±¾£¬×Ö·û±àÂëgbk.
+	 * è¾“å‡ºå¤§é‡çš„æ•°æ®ï¼Œè¾“å‡ºæ ¼å¼æ˜¯csv,çº¯æ–‡æœ¬ï¼Œå­—ç¬¦ç¼–ç gbk.
 	 * @param stream
 	 * @param dataList
 	 * @param columnList
@@ -227,7 +228,7 @@ public class ExcelUtils {
 	 * @param stream
 	 * @param clazz
 	 * @param headRows
-	 *            ±êÌâËùÕ¼µÄĞĞÊı
+	 *            æ ‡é¢˜æ‰€å çš„è¡Œæ•°
 	 * @return
 	 * @throws IOException
 	 */
@@ -240,6 +241,7 @@ public class ExcelUtils {
 		HSSFSheet sheet = workbook.getSheetAt(0);
 		int rowCount = sheet.getPhysicalNumberOfRows();
 		if (rowCount <= headRows) {
+			workbook.close();
 			return Collections.EMPTY_LIST;
 		}
 		List dataList = new ArrayList();
@@ -248,15 +250,16 @@ public class ExcelUtils {
 			Object t = this.readFromRow(row, columnList);
 			dataList.add(t);
 		}
+		workbook.close();
 		return dataList;
 	}
 	
 	/**
-	 * ¶ÁÈ¡txtÖĞµÄÊı¾İ·µ»ØList<Map>
-	 * @param stream  ¶ÁÈ¡Íêºó²»¹Ø±Õ
-	 * @param columnName  ÁĞÃû
-	 * @param columnType  ÁĞµÄÀàĞÍ Ö§³ÖString.class, Long.class, Boolean.class
-	 * @param delimiter  Ä¬ÈÏÖÆ±í·û\t
+	 * è¯»å–txtä¸­çš„æ•°æ®è¿”å›List<Map>
+	 * @param stream  è¯»å–å®Œåä¸å…³é—­
+	 * @param columnName  åˆ—å
+	 * @param columnType  åˆ—çš„ç±»å‹ æ”¯æŒString.class, Long.class, Boolean.class
+	 * @param delimiter  é»˜è®¤åˆ¶è¡¨ç¬¦\t
 	 */
 	public List<Map> readTxt(InputStream stream, List<String> columnName, List<Class> columnType){
 		return this.readTxt(stream, columnName, columnType, "\t");
@@ -278,7 +281,7 @@ public class ExcelUtils {
 					continue;
 				}
 				String[] data = StringUtils.trimToEmpty(line).split(delimiter);
-				if(data.length < columnName.size()){//Êı¾İ²»È«µÄºöÂÔ
+				if(data.length < columnName.size()){//æ•°æ®ä¸å…¨çš„å¿½ç•¥
 					continue;
 				}
 				Map params = new HashMap();
@@ -533,15 +536,15 @@ public class ExcelUtils {
 
 	public static class Column {
 		/**
-		 * ÏÔÊ¾µÄÁĞÃû
+		 * æ˜¾ç¤ºçš„åˆ—å
 		 */
 		private String name;
 		/**
-		 * ÊôĞÔÃû£¬ÓÃÓÚ·´ÉäÈ¡Êı¾İ
+		 * å±æ€§åï¼Œç”¨äºåå°„å–æ•°æ®
 		 */
 		private String property;
 		/**
-		 * ¿í¶È
+		 * å®½åº¦
 		 */
 		private int width;
 
@@ -585,7 +588,7 @@ public class ExcelUtils {
 	}
 
 	/**
-	 * Öµ×ª»»Æ÷<br/>
+	 * å€¼è½¬æ¢å™¨<br/>
 	 * <b>CELL_TYPE_NUMERIC</b> only supports <b>LONG</b> and <b>DOUBLE</b>, so if you write your 
 	 * own <b>NUMERIC</b> ValueConverter, you must return <b>LONG</b> or <b>DOUBLE</b>
 	 * @author user
@@ -645,12 +648,12 @@ public class ExcelUtils {
 
 		@Override
 		public String beanToExcel(Object value) {
-			return BooleanUtils.toString((Boolean)value, "ÊÇ", "·ñ", "·ñ");
+			return BooleanUtils.toString((Boolean)value, "æ˜¯", "å¦", "å¦");
 		}
 
 		@Override
 		public Object excelToBean(String value) {
-			return BooleanUtils.toBooleanObject(value, "ÊÇ", "·ñ", "·ñ");
+			return BooleanUtils.toBooleanObject(value, "æ˜¯", "å¦", "å¦");
 		}
 
 	};
